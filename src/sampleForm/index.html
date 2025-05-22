@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <title>会員登録フォーム</title>
+        <style>
+            body {
+                font-family: sans-serif;
+                margin: 20px;
+            }
+            form {
+                max-width: 500px;
+            }
+            label {
+                display: block;
+                margin-top: 10px;
+            }
+            input,
+            select {
+                width: 100%;
+                padding: 8px;
+                margin-top: 4px;
+            }
+            button {
+                margin-top: 20px;
+                padding: 10px 20px;
+            }
+            #overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background: rgba(0, 0, 0, 0.3);
+                display: none;
+                align-items: center;
+                justify-content: center;
+            }
+            #modal {
+                background: white;
+                padding: 20px;
+                border-radius: 8px;
+                width: 90%;
+                max-width: 400px;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>会員登録フォーム</h2>
+        <form id="registerForm">
+            <label>氏名<input type="text" name="name" required /></label>
+            <label>メールアドレス<input type="email" name="email" required /></label>
+            <label>パスワード<input type="password" name="password" required /></label>
+            <label>生年月日<input type="date" name="birthdate" /></label>
+            <label
+                >性別
+                <select name="gender">
+                    <option value="">選択してください</option>
+                    <option value="male">男性</option>
+                    <option value="female">女性</option>
+                    <option value="other">その他</option>
+                </select>
+            </label>
+            <label>電話番号<input type="tel" name="phone" /></label>
+            <label>住所<input type="text" name="address" /></label>
+            <label>職業<input type="text" name="job" /></label>
+            <label>興味のあるカテゴリ<input type="text" name="interests" /></label>
+            <label
+                >メルマガ購読
+                <select name="newsletter">
+                    <option value="yes">希望する</option>
+                    <option value="no">希望しない</option>
+                </select>
+            </label>
+            <button type="submit">送信</button>
+        </form>
+
+        <!-- モーダル -->
+        <div id="overlay">
+            <div id="modal">
+                <p>この内容で送信してよろしいですか？</p>
+                <button id="confirm">OK</button>
+                <button id="cancel">Cancel</button>
+            </div>
+        </div>
+
+        <script>
+            const form = document.getElementById('registerForm');
+            const overlay = document.getElementById('overlay');
+            const confirmBtn = document.getElementById('confirm');
+            const cancelBtn = document.getElementById('cancel');
+
+            let formData = null;
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                formData = new FormData(form);
+                overlay.style.display = 'flex';
+            });
+
+            confirmBtn.addEventListener('click', () => {
+                console.log('送信データ:', Object.fromEntries(formData.entries()));
+                overlay.style.display = 'none';
+                alert('送信完了しました！');
+                location.reload(); // フォームを初期化
+            });
+
+            cancelBtn.addEventListener('click', () => {
+                overlay.style.display = 'none';
+            });
+        </script>
+    </body>
+</html>

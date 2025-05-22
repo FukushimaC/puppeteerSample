@@ -1,20 +1,19 @@
 {
-  "name": "puppeteersample",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "scripts": {
-    "build": "tsc",
-    "start": "ts-node src/index.ts",
-    "dev": "ts-node-dev --respawn src/index.ts",
-    "build:start": "npm run build && npm start"
-  },
-  "devDependencies": {
-    "@types/node": "^20.11.24",
-    "@types/puppeteer": "^5.4.7",
-    "puppeteer": "^22.0.0",
-    "ts-node": "^10.9.2",
-    "ts-node-dev": "^2.0.0",
-    "typescript": "^5.3.3"
-  }
+    "name": "puppeteersample",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "scripts": {
+        "build": "tsc",
+        "dev": "ts-node-dev --respawn src/index.ts",
+        "start": "ts-node --esm"
+    },
+    "devDependencies": {
+        "@types/node": "^20.11.24",
+        "@types/puppeteer": "^5.4.7",
+        "puppeteer": "^22.0.0",
+        "ts-node": "^10.9.2",
+        "ts-node-dev": "^2.0.0",
+        "typescript": "^5.3.3"
+    }
 }

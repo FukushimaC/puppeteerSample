@@ -1,10 +1,22 @@
 import puppeteer from 'puppeteer';
 
+// puppeteerオブジェクト(BrowserやPage)関連の操作を定義
+
+/**
+ *
+ * @param height ブラウザやviewPortの高さ
+ * @param width ブラウザやviewPortの幅
+ * @param timeout タイムアウト時間（ミリ秒）
+ * @param slowMo puppeteerの自動操作の合間の遅延時間（ミリ秒）
+ * @param headless ヘッドレスブラウザの使用
+ * @returns {browser, page, timeout} 自動操作用のpuppeteerオブジェクト(Browser, Page)や以降でも使用するtimeoutを返す
+ */
+
 export async function createBrowserSession(
     height = 800,
     width = 1200,
     timeout = 5000,
-    slowMo = 10,
+    slowMo = 5,
     headless = false
 ) {
     // Chromeからのダウンロード時点で、以下のような問題が発生しうるため、おおむね良い具合に使える設定で初期化するように共通化した。
