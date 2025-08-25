@@ -39,5 +39,4 @@ npm start src/ファイル名.js
 Chrome の開発者ツールでダウンロードした puppeteer のコードは、javaScript ファイルなので、ファイルは javaScript で統一。
 
 # 自動化の手順
-
-    詳細は[Qiita記事](https://qiita.com/CFukushima/efbc45b7d41f2800d0de)参照。
+詳細は[Qiita記事](https://qiita.com/CFukushima/items/efbc45b7d41f2800d0de)参照。

@@ -78,7 +78,18 @@
             </label>
             <label for="fileInput">ファイルアップロード:</label>
             <input type="file" id="fileInput" name="fileInput" />
-            <label>一時コード<input type="text" name="code" /></label>
+            <div>※サンプルコードでは、都度変わる値は、ユーザーに入力させるよう実装している。</div>
+            <iframe style="width:200px; height:100px;" name="iframeSample"
+                srcdoc="
+                <!DOCTYPE html>
+                <html lang='ja'>
+                    <head><meta charset='UTF-8'></head>
+                    <body>
+                        <label>一時コード<input type='text' name='code' /></label>
+                    </body>
+                </html>
+                ">
+            </iframe>
             <button type="submit">送信</button>
         </form>
 
