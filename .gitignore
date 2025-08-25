@@ -1,0 +1,4 @@
+*.png
+screenshots/*
+dist/*
+node_modules/*
