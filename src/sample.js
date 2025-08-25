@@ -311,7 +311,8 @@ const { pathToFileURL } = require("url");
         {
             // 一時コードのように、都度値が変わる場合は、操作途中で処理を止めて、ユーザーの入力を待つ。
             const userInput = await askQuestion('適当な値を入力してください：');
-            const targetPage = page;
+            const frame = page.frames().find(f => f.name() === "iframeSample");        
+            const targetPage = frame;
             await puppeteer.Locator.race([
                 targetPage.locator('::-p-aria(一時コード)'),
                 targetPage.locator('label:nth-of-type(11) > input'),
