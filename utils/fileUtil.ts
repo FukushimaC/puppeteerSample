@@ -38,8 +38,8 @@ export const uploadFile = async (page: Page, selectors: string[], relativePath: 
 /**
  * ページ全体をスクロールしつつキャプチャを取得する。
  * @param page 現在開いているページのPageオブジェクト
- * @param directory 保存先のディレクトリ(指定しない場合は現在のディレクトリに.screenshotフォルダを作る)
- * @param filePrefix ファイル保存じの名前の前半。（スクロールが必要な場合はこの文字列に連番を付ける）
+ * @param directory 保存先のディレクトリ(指定しない場合はutilsディレクトリに.screenshotフォルダを作る)
+ * @param filePrefix ファイル保存時の名前の前半。（スクロールが必要な場合はこの文字列に連番を付ける）
  * デフォルトでは、表示中のURLの"/"を"_"に置き換え、英数字以外の文字を削除したものを使う。
  */
 export const screenshotWholePage = async (

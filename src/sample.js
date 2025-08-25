@@ -1,7 +1,9 @@
 const puppeteer = require('puppeteer'); // v23.0.0 or later
 const { createBrowserSession } = require('../utils/browserUtil');
-const { setupDialogHandler } = require('../utils/inputUtil');
+const { setupDialogHandler, askQuestion } = require('../utils/inputUtil');
 const { screenshotWholePage, readCsv } = require('../utils/fileUtil');
+const { uploadFile } = require('../utils/fileUtil');
+const { pathToFileURL } = require("url");
 
 (async () => {
     const { browser, page, timeout } = await createBrowserSession();
@@ -13,17 +15,18 @@ const { screenshotWholePage, readCsv } = require('../utils/fileUtil');
             height: 828,
         });
     }
-    // NOTE: 送信後のダイアログを閉じるためのリスナーを設定
+    // 送信後のダイアログを閉じるためのリスナーを設定
     await setupDialogHandler(targetPage);
     {
         const targetPage = page;
         await targetPage.goto(
-            'file:///C:/Users/thu/Desktop/C%E3%83%89%E3%83%A9%E3%82%A4%E3%83%96%E3%82%B7%E3%83%A7%E3%83%BC%E3%83%88%E3%82%AB%E3%83%83%E3%83%88%E9%9B%86/projects/puppeteerSample/sampleSrc/form/index.html'
+            // テスト用に同プロジェクト内のサンプルページのファイルを開く。
+            pathToFileURL('./sampleSrc/form/index.html').href
         );
     }
-    // NOTE: CSVからinput用の情報を読み取る
-    const inputDataList = readCsv('sampleSrc/inputTenItem.csv');
-    // NOTE: 繰り返し処理の書き方によっては待ち処理が上手く動かない。for of推奨
+    // CSVからinput用の情報を読み取る
+    const inputDataList = readCsv('src/sampleInput.csv');
+    // 繰り返し処理の書き方によっては待ち処理が上手く動かない。for of推奨
     for await (const [index, inputData] of inputDataList.entries()) {
         {
             const targetPage = page;
@@ -298,8 +301,30 @@ const { screenshotWholePage, readCsv } = require('../utils/fileUtil');
                 .fill('no');
         }
         {
-            // NOTE: 送信直前に、ページ全体のスクリーンショットを取得
-            await screenshotWholePage(page, null, `input_${index}`);
+            const targetPage = page;
+            await uploadFile(
+                targetPage,
+                ['#fileInput', 'input[name="image"]', 'input[type="file"]'],
+                '/penguin.png'
+            );
+        }
+        {
+            // 一時コードのように、都度値が変わる場合は、操作途中で処理を止めて、ユーザーの入力を待つ。
+            const userInput = await askQuestion('適当な値を入力してください：');
+            const targetPage = page;
+            await puppeteer.Locator.race([
+                targetPage.locator('::-p-aria(一時コード)'),
+                targetPage.locator('label:nth-of-type(11) > input'),
+                targetPage.locator('::-p-xpath(//*[@id=\\"registerForm\\"]/label[11]/input)'),
+                targetPage.locator(':scope >>> label:nth-of-type(11) > input'),
+            ])
+                .setTimeout(timeout)
+                .fill(userInput);
+        }
+
+        {
+            // 送信直前に、ページ全体のスクリーンショットを取得
+            await screenshotWholePage(page, "./src/screenshot", `form_input_${index}`);
 
             const targetPage = page;
             await puppeteer.Locator.race([
