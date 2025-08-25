@@ -6,15 +6,9 @@ const { uploadFile } = require('../utils/fileUtil');
 const { pathToFileURL } = require("url");
 
 (async () => {
-    const { browser, page, timeout } = await createBrowserSession();
+    const { browser, page, timeout } = await createBrowserSession(700, 700);
     const targetPage = page;
-    console.log(new Date());
-    {
-        await targetPage.setViewport({
-            width: 1194,
-            height: 828,
-        });
-    }
+
     // 送信後のダイアログを閉じるためのリスナーを設定
     await setupDialogHandler(targetPage);
     {
